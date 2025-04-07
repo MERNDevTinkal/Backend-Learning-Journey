@@ -1,0 +1,17 @@
+{
+  "name": "learning-mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Tinkal",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2",
+    "nodemon": "^3.1.9"
+  }
+}
