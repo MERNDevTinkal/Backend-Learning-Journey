@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Manager</title>
+  <title>Task Creater</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -31,7 +31,7 @@
         <% files.forEach(function(val) { %>
           <div class="task w-72 p-5 bg-zinc-800 rounded-md shadow hover:bg-zinc-700 transition">
             <h1 class="text-white text-xl font-semibold mb-2"><%= val %></h1>
-            <a class="text-blue-500 hover:underline" href="#">Read More.</a>
+            <a class="text-blue-500 hover:underline" href="/file/<%= val %>">Read More.</a>
           </div>
         <% }) %>
       <% } else { %>
