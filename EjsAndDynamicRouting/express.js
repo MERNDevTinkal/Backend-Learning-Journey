@@ -14,7 +14,11 @@ app.get("/",function(req,res){
 });
 
 app.get("/profile/:userName",function(req,res){
-    res.send("Hello dear this is Your profilepage Tinkal");
+    res.send(`welcome to the profile page of, ${req.params.userName}`);  
+});
+
+app.get("/auther/:userName/:age",function(req,res){
+    res.send(`welcome to the profile auther page of , ${req.params.userName} and age is ${req.params.age}`);
 });
 
 app.listen(5000,function(){
