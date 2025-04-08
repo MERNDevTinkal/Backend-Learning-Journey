@@ -1,19 +1,22 @@
 {
   "name": "crud-operations",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CRUD app using Express, MongoDB, and EJS with server-side rendering",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["CRUD", "Express", "MongoDB", "EJS", "Render", "Server-Side Rendering"],
+  "author": "Tinkal Kumar",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "mongoose": "^8.13.2",
+    "mongoose": "^8.13.2"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.9"
   }
 }
