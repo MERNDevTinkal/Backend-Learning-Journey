@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Read User</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/stylesheet/style.css" />
+</head>
+
+<body>
+    <div class="w-full min-h-screen bg-zinc-900 p-10 text-white">
+        <div class="nav mb-6">
+            <a href="/"
+                class="text-blue-400 hover:text-blue-500 underline hover:underline-offset-4 font-medium transition-all duration-300">
+                ➤ Back to Home
+            </a>
+        </div>
+
+        <h1 class="text-3xl mb-5 font-semibold tracking-wide">All Users</h1>
+
+        <!-- User Cards Container -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <% if(readUser.length> 0) { %>
+                <% readUser.forEach(function(user) { %>
+                    <div class="bg-zinc-800 rounded-xl p-4 shadow-md flex flex-col items-center text-center">
+                        <img src="<%= user.image %>" alt="<%= user.name %>"
+                            class="w-24 h-24 rounded-full object-cover mb-4" />
+                        <h2 class="text-lg font-semibold">
+                            <%= user.name %>
+                        </h2>
+                        <p class="text-sm text-zinc-400 mb-4">
+                            <%= user.email %>
+                        </p>
+                        <div class="flex gap-4">
+                            <a href="/edit/<%= user._id %>"
+                                class="bg-blue-600 px-4 py-1 rounded hover:bg-blue-700 text-sm text-white font-medium transition-all duration-300">
+                                Edit
+                            </a>
+                            <a href="/delete/<%= user._id %>"
+                                class="bg-red-600 px-4 py-1 rounded hover:bg-red-700 text-sm text-white font-medium transition-all duration-300">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                    <% }) %>
+                        <% } else { %>
+                            <p class="text-zinc-400 text-lg col-span-full text-center">No users found.</p>
+                            <% } %>
+        </div>
+
+    </div>
+</body>
+
+</html>

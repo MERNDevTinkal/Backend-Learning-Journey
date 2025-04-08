@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/stylesheet/style.css" />
+</head>
+
+<body>
+    <div class="w-full h-full bg-zinc-900 p-10 text-white">
+        <div class="nav mb-6">
+            <a href="/read"
+                class="text-blue-400 hover:text-blue-500 underline hover:underline-offset-4 font-medium transition-all duration-300">
+                ➤ Read Users
+            </a>
+        </div>
+
+        <h1 class="text-3xl mb-5 font-semibold tracking-wide">Create User</h1>
+        <form action="/create" method="POST" class="space-x-3 space-y-3">
+            <input type="text" placeholder="Name" name="name"
+                class="px-5 py-2 border border-zinc-700 bg-zinc-800 rounded-lg placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" />
+            <input type="text" placeholder="Email" name="email"
+                class="px-5 py-2 border border-zinc-700 bg-zinc-800 rounded-lg placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" />
+            <input type="text" placeholder="Image URL" name="image"
+                class="px-5 py-2 border border-zinc-700 bg-zinc-800 rounded-lg placeholder-gray-400 outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" />
+            <input type="submit" value="Create User"
+                class="px-6 py-2 bg-blue-700 hover:bg-blue-800 rounded-lg text-white font-medium cursor-pointer transition-all duration-300" />
+        </form>
+    </div>
+</body>
+
+</html>
