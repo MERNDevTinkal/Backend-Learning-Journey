@@ -1,0 +1,17 @@
+{
+  "name": "data-association",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "tinkla",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoosh": "^0.0.7",
+    "nodemon": "^3.1.9"
+  }
+}
