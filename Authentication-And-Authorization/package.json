@@ -1,0 +1,22 @@
+{
+  "name": "tinkal",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "tinkal kumar",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "mongosh": "^2.4.2",
+    "nodemon": "^3.1.9"
+  }
+}
