@@ -7,77 +7,91 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body class="bg-gray-900 text-white min-h-screen w-full px-6 py-10">
-    <div
-      class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-start"
-    >
-      <!-- Left: Post Form -->
-      <div class="bg-gray-800 p-8 rounded-2xl shadow-xl">
-        <h2 class="text-3xl font-bold mb-6">👋 Hello, <%= user.name %></h2>
-        <p class="text-gray-400 mb-4">You can create a new post below</p>
+  <body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen w-full px-6 py-10 font-sans">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
 
+      <!-- Left: Post Form & Profile -->
+      <div class="bg-gray-800 p-8 rounded-3xl shadow-2xl">
+        <div class="flex items-center gap-4 mb-6">
+            <img
+            src=" /images/uploads/<%= user.profilepic %>"
+            alt="Profile Picture"
+            class="w-16 h-16 rounded-full object-cover border-2 border-blue-500 shadow"
+          />
+          
+          <div>
+            <h2 class="text-3xl font-bold">👋 Hello, <%= user.name %></h2>
+            <p class="text-sm text-gray-400">@<%= user.userName %></p>
+          </div>
+        </div>
+
+        <hr class="border-gray-700 my-6" />
+
+        <p class="text-gray-400 mb-4">Create a new post below</p>
         <form action="/post" method="POST" class="space-y-4">
           <textarea
             name="content"
             placeholder="💭 What's on your mind?"
             required
             rows="5"
-            class="w-full p-4 bg-gray-700 rounded-lg border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition-all"
+            class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
           ></textarea>
 
           <input
             type="submit"
             value="🚀 Create New Post"
-            class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg cursor-pointer hover:bg-blue-700 transition duration-300"
+            class="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold py-3 rounded-xl cursor-pointer hover:from-blue-700 hover:to-blue-600 transition duration-300 shadow-md"
           />
         </form>
       </div>
 
       <!-- Right: Logout & Posts -->
-      <div class="flex flex-col h-full justify-between space-y-6">
+      <div class="flex flex-col h-full space-y-6">
+
         <!-- Logout Button -->
         <div class="flex justify-end">
           <a
             href="/logout"
-            class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-lg shadow transition"
+            class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-6 rounded-xl shadow transition"
           >
             🚪 Logout
           </a>
         </div>
 
         <!-- Posts Section -->
-        <div class="bg-gray-800 p-6 rounded-2xl shadow-md flex-1">
-          <h3 class="text-2xl font-semibold mb-4">📝 Your Posts</h3>
+        <div class="bg-gray-800 p-6 rounded-3xl shadow-lg flex-1 overflow-y-auto max-h-[80vh]">
+          <h3 class="text-2xl font-semibold mb-6">📝 Your Posts</h3>
 
           <div class="space-y-6" id="postcontainer">
             <% user.posts.reverse().forEach(function(post) { %>
-            <div
-              class="bg-gray-700 p-5 rounded-xl shadow border border-gray-600"
-            >
-              <div class="flex justify-between items-start mb-2">
-                <h4 class="text-sm text-blue-400">@<%= user.userName %></h4>
-                <span class="text-xs text-gray-400">2 hours ago</span>
-              </div>
+              <div class="bg-gray-700 p-5 rounded-2xl border border-gray-600 shadow-md hover:shadow-lg transition-all duration-300">
+                <div class="flex justify-between items-start mb-2">
+                  <h4 class="text-sm text-blue-400">@<%= user.userName %></h4>
+                </div>
 
-              <p class="text-gray-200 leading-relaxed mb-4">
-                <%= post.content %>
-              </p>
-              <small><%= post.likes.length %> likes</small>
-              <div class="flex gap-4">
-                <% const liked = post.likes.includes(user._id.toString()); %>
-                <a
-                  href="/like/<%= post._id %>"
-                  class="<%= liked ? 'text-red-400' : 'text-green-400' %> hover:text-opacity-80 font-medium transition"
-                >
-                  <%= liked ? '👎 Unlike' : '👍 Like' %>
-                </a>
-                <a
-                href="/edit/<%= post._id %>"
-                class="text-yellow-400 hover:text-yellow-300 font-medium transition"
-              >✏️ Edit</a>
-              
+                <p class="text-gray-100 leading-relaxed mb-4 whitespace-pre-line">
+                  <%= post.content %>
+                </p>
+
+                <div class="flex justify-between items-center text-sm text-gray-400">
+                  <span>❤️ <%= post.likes.length %> likes</span>
+                  <div class="flex gap-4">
+                    <% const liked = post.likes.includes(user._id.toString()); %>
+                    <a
+                      href="/like/<%= post._id %>"
+                      class="<%= liked ? 'text-red-400' : 'text-green-400' %> hover:text-opacity-80 font-medium transition"
+                    >
+                      <%= liked ? '👎 Unlike' : '👍 Like' %>
+                    </a>
+                    <a
+                      href="/edit/<%= post._id %>"
+                      class="text-yellow-400 hover:text-yellow-300 font-medium transition"
+                    >
+                      ✏️ Edit
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
             <% }); %>
           </div>
         </div>
