@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Post</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center px-4 py-10">
+
+  <div class="bg-gray-800 w-full max-w-xl p-8 rounded-2xl shadow-lg space-y-6">
+
+    <h1 class="text-3xl font-bold text-center text-white">✏️ Edit Your Post</h1>
+
+    <form action="/update/<%= post._id %>" method="POST" class="space-y-4">
+      <label for="content" class="block text-gray-300 font-medium">Post Content</label>
+      <textarea
+        name="content"
+        id="content"
+        placeholder=" What's on your mind?"
+        required
+        rows="6"
+        class="w-full p-4 bg-gray-700 rounded-xl border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition-all"
+      ><%= post.content %></textarea>
+
+      <input
+        type="submit"
+        value=" Update Post"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition duration-300 cursor-pointer"
+      >
+    </form>
+
+    <div class="text-center">
+      <a href="/profile" class="text-sm text-gray-400 hover:text-white transition">
+        ← Back to Profile
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>
