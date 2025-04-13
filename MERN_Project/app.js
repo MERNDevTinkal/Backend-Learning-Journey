@@ -4,6 +4,8 @@ import connectDB from "./DB/Database.js";
 import userRouter from "./routes/userRouter.js";
 import todoRouter from "./routes/todoRouter.js";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+
 const app = express();
 
 dotenv.config();
@@ -12,6 +14,7 @@ connectDB();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/todo", todoRouter);

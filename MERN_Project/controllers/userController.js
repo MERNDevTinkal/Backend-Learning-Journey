@@ -1,5 +1,6 @@
-import UserModel from "../models/user.js"; 
+import UserModel from "../models/user.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
@@ -19,6 +20,7 @@ export const register = async (req, res) => {
         message: "User already registered with this email.",
       });
     }
+    // using Bcrypt
 
     const hashedPassword = await bcrypt.hash(password, 10);
     await UserModel.create({
@@ -62,7 +64,10 @@ export const login = async (req, res) => {
       });
     }
 
-    const isPasswordMatched = await bcrypt.compare(password, existingUser.password);
+    const isPasswordMatched = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
 
     if (!isPasswordMatched) {
       return res.status(401).json({
@@ -71,11 +76,27 @@ export const login = async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      success: true,
-      message: `Welcome back ${existingUser.fullName}`,
-    });
+    // Usig JWT
 
+    const token = jwt.sign(
+      { userId: existingUser._id },
+      process.env.SECRET_KEY,
+      { expiresIn: "1d" }
+    );
+
+    // using cookie when login successfull
+
+    return res
+      .status(200)
+      .cookie("token", token, {
+        httpOnly: true, // Cookie ko JavaScript se access nahi kiya ja sakta
+        sameSite: "strict", // Only send the cookie for same-site requests
+        maxAge: 24 * 60 * 60 * 1000, // Cookie will expire after 1 day
+      })
+      .json({
+        success: true,
+        message: `Welcome back ${existingUser.fullName}`,
+      });
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({
