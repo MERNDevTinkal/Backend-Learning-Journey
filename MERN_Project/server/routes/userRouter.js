@@ -1,6 +1,6 @@
 import express from "express";
-import { register, login } from "../server/controllers/userController.js";
-import logout from "../server/controllers/userController.js";
+import { register, login } from '../controllers/userController.js';
+import logout from "../controllers/userController.js";
 
 const router = express.Router();
 
