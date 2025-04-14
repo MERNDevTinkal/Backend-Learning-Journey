@@ -7,8 +7,6 @@ const Home = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [editId, setEditId] = useState(null);
-  const [editTitle, setEditTitle] = useState("");
-  const [editDescription, setEditDescription] = useState("");
 
   const fetchTodos = async () => {
     try {
@@ -23,19 +21,29 @@ const Home = () => {
     fetchTodos();
   }, []);
 
-  const handleAddTodo = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim() || !description.trim()) {
       return toast.error("Fields cannot be empty or spaces only");
     }
+
     try {
-      const res = await axiosInstance.post("/todo", { title, description });
-      toast.success(res.data.message);
+      if (editId) {
+        // Update
+        const res = await axiosInstance.put(`/todo/${editId}`, { title, description });
+        toast.success(res.data.message || "Todo updated");
+      } else {
+        // Create
+        const res = await axiosInstance.post("/todo", { title, description });
+        toast.success(res.data.message || "Todo created");
+      }
+
       setTitle("");
       setDescription("");
+      setEditId(null);
       fetchTodos();
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to create todo");
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
 
@@ -51,34 +59,15 @@ const Home = () => {
 
   const handleEdit = (todo) => {
     setEditId(todo._id);
-    setEditTitle(todo.title);
-    setEditDescription(todo.description);
-  };
-
-  const handleUpdate = async () => {
-    if (!editTitle.trim() || !editDescription.trim()) {
-      return toast.error("Fields cannot be empty or spaces only");
-    }
-    try {
-      const res = await axiosInstance.put(`/todo/${editId}`, {
-        title: editTitle,
-        description: editDescription,
-      });
-      toast.success(res.data.message);
-      setEditId(null);
-      setEditTitle("");
-      setEditDescription("");
-      fetchTodos();
-    } catch (error) {
-      toast.error("Update failed");
-    }
+    setTitle(todo.title);
+    setDescription(todo.description);
   };
 
   return (
     <div className="max-w-xl mx-auto mt-10 px-4 text-white">
       <h1 className="text-4xl font-extrabold text-center text-purple-400 mb-6">📋 My Todos</h1>
 
-      <form onSubmit={handleAddTodo} className="bg-[#1e1e2e] p-4 rounded-2xl shadow-xl mb-6">
+      <form onSubmit={handleSubmit} className="bg-[#1e1e2e] p-4 rounded-2xl shadow-xl mb-6">
         <input
           type="text"
           placeholder="Title"
@@ -96,9 +85,11 @@ const Home = () => {
         />
         <button
           type="submit"
-          className="bg-purple-600 hover:bg-purple-700 transition-all duration-200 px-4 py-2 rounded-xl text-white font-semibold w-full"
+          className={`${
+            editId ? "bg-green-600 hover:bg-green-700" : "bg-purple-600 hover:bg-purple-700"
+          } transition-all duration-200 px-4 py-2 rounded-xl text-white font-semibold w-full`}
         >
-          ➕ Add Todo
+          {editId ? " Save Changes" : "➕ Add Todo"}
         </button>
       </form>
 
@@ -106,50 +97,24 @@ const Home = () => {
         {todos.map((todo) => (
           <li
             key={todo._id}
-            className="bg-[#2e2e3e] p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md"
+            className="bg-[#2e2e3e] p-4 rounded-xl flex justify-between items-start shadow-md"
           >
-            {editId === todo._id ? (
-              <div className="flex-1">
-                <input
-                  type="text"
-                  value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
-                  className="w-full p-2 mb-2 rounded bg-[#1e1e2e] text-white border border-gray-600"
-                />
-                <textarea
-                  value={editDescription}
-                  onChange={(e) => setEditDescription(e.target.value)}
-                  className="w-full p-2 rounded bg-[#1e1e2e] text-white border border-gray-600"
-                />
-              </div>
-            ) : (
-              <div>
-                <h3 className="font-bold text-lg">{todo.title}</h3>
-                <p className="text-gray-300 text-sm">{todo.description}</p>
-              </div>
-            )}
-
+            <div>
+              <h3 className="">{todo.title}</h3>
+              <p className="text-gray-300 text-sm">{todo.description}</p>
+            </div>
             <div className="flex gap-2">
-              {editId === todo._id ? (
-                <button
-                  onClick={handleUpdate}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-xl"
-                >
-                   Save
-                </button>
-              ) : (
-                <button
-                  onClick={() => handleEdit(todo)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded-xl"
-                >
-                   Edit
-                </button>
-              )}
+              <button
+                onClick={() => handleEdit(todo)}
+                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded-xl"
+              >
+                Update
+              </button>
               <button
                 onClick={() => handleDelete(todo._id)}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-xl"
               >
-                 Delete
+                Delete
               </button>
             </div>
           </li>

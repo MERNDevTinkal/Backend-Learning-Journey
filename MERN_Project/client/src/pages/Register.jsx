@@ -10,7 +10,8 @@ const Register = () => {
   const navigate = useNavigate()
 
   const handleRegister = async (e) => {
-    e.preventDefault()
+    e.preventDefault() // page reload hone se rokta hai.
+
     try {
       const res = await axiosInstance.post('/user', { fullName, email, password })
       toast.success(res.data.message)

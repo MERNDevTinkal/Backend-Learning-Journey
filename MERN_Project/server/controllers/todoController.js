@@ -47,12 +47,13 @@ export const getAllTodos = async (req, res) => {
 
 export const updateTodo = async (req, res) => {
   try {
-    const todoId = req.params.todoId;
-    const { title } = req.body;
+    const todoId = req.params.todoId.trim();
+   // const todoId = req.params.todoId;
+    const { title, description } = req.body;
 
     const todo = await TodoModel.findByIdAndUpdate(
       todoId,
-      { title },
+      { title, description },
       { new: true }
     );
 
@@ -76,6 +77,7 @@ export const updateTodo = async (req, res) => {
     });
   }
 };
+
 
 export const deleteTodo = async (req, res) => {
   try {
