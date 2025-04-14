@@ -1,4 +1,4 @@
-import UserModel from "../models/user.js";
+import UserModel from "../../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -89,7 +89,7 @@ export const login = async (req, res) => {
     return res
       .status(200)
       .cookie("token", token, {
-        httpOnly: true, // Cookie ko JavaScript se access nahi kiya ja sakta
+        httpOnly: true, // Cookie ko JavaScript se access nahi kiya ja sakta, Yeh cookie sirf server-side code ke liye accessible hoti hai.
         sameSite: "strict", // Only send the cookie for same-site requests
         maxAge: 24 * 60 * 60 * 1000, // Cookie will expire after 1 day
       })
@@ -105,3 +105,17 @@ export const login = async (req, res) => {
     });
   }
 };
+
+
+const logout = async (req,res) => {
+    try {
+        return res.status(200).cookie("token", "" , {maxAge:0}).json({
+          success : true,
+          message : " user logout successfuly",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export default logout;
